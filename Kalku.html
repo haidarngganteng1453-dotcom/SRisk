@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator Risiko Stroke Framingham</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 24px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #34495e;
+        }
+        select, input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        .radio-group {
+            display: flex;
+            gap: 20px;
+            margin-top: 5px;
+        }
+        .radio-group label {
+            font-weight: normal;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        .result {
+            margin-top: 30px;
+            padding: 20px;
+            border-radius: 5px;
+            background-color: #f8f9fa;
+            border-left: 4px solid #3498db;
+        }
+        .risk-value {
+            font-size: 36px;
+            font-weight: bold;
+            color: #2c3e50;
+            text-align: center;
+            margin: 10px 0;
+        }
+        .risk-category {
+            text-align: center;
+            font-size: 18px;
+            padding: 8px;
+            border-radius: 5px;
+        }
+        .low-risk {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .moderate-risk {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+        .high-risk {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        .info-note {
+            margin-top: 20px;
+            font-size: 12px;
+            color: #7f8c8d;
+            text-align: center;
+            border-top: 1px solid #eee;
+            padding-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📊 Kalkulator Risiko Stroke Framingham (10 Tahun)</h1>
+        <p style="text-align: center; color: #7f8c8d; margin-bottom: 25px;">Berdasarkan Framingham Stroke Risk Profile (FSRP)</p>
+        
+        <div class="form-group">
+            <label>👤 Jenis Kelamin:</label>
+            <div class="radio-group">
+                <label><input type="radio" name="gender" value="male" checked> Laki-laki</label>
+                <label><input type="radio" name="gender" value="female"> Perempuan</label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>📅 Usia (tahun):</label>
+            <input type="number" id="age" min="54" max="85" value="60" step="1">
+            <small style="color: #7f8c8d;">*Rentang valid: 54-85 tahun</small>
+        </div>
+
+        <div class="form-group">
+            <label>💓 Tekanan Darah Sistolik (mmHg):</label>
+            <select id="systolic">
+                <option value="0">105-119 mmHg (Poin 0)</option>
+                <option value="1">120-129 mmHg (Poin 1)</option>
+                <option value="2">130-139 mmHg (Poin 2)</option>
+                <option value="3">140-149 mmHg (Poin 3)</option>
+                <option value="4">150-159 mmHg (Poin 4)</option>
+                <option value="5">160-169 mmHg (Poin 5)</option>
+                <option value="6">170-179 mmHg (Poin 6)</option>
+                <option value="7">180-189 mmHg (Poin 7)</option>
+                <option value="8">190-199 mmHg (Poin 8)</option>
+                <option value="9">200-209 mmHg (Poin 9)</option>
+                <option value="10">≥210 mmHg (Poin 10)</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>🩸 Apakah menderita Diabetes?</label>
+            <div class="radio-group">
+                <label><input type="radio" name="diabetes" value="1"> Ya</label>
+                <label><input type="radio" name="diabetes" value="0" checked> Tidak</label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>🚬 Apakah perokok aktif?</label>
+            <div class="radio-group">
+                <label><input type="radio" name="smoker" value="1"> Ya</label>
+                <label><input type="radio" name="smoker" value="0" checked> Tidak</label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>❤️ Riwayat Penyakit Jantung (CAD, gagal jantung, dll)?</label>
+            <div class="radio-group">
+                <label><input type="radio" name="heartDisease" value="1"> Ya</label>
+                <label><input type="radio" name="heartDisease" value="0" checked> Tidak</label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>⚡ Fibrilasi Atrium ?</label>
+            <div class="radio-group">
+                <label><input type="radio" name="afib" value="1"> Ya</label>
+                <label><input type="radio" name="afib" value="0" checked> Tidak</label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>📈 Hipertrofi Ventrikel Kiri (LVH) pada EKG?</label>
+            <div class="radio-group">
+                <label><input type="radio" name="lvh" value="1"> Ya</label>
+                <label><input type="radio" name="lvh" value="0" checked> Tidak</label>
+            </div>
+        </div>
+
+        <button onclick="calculateRisk()">Hitung Risiko Stroke</button>
+
+        <div id="result" class="result" style="display: none;">
+            <h3 style="margin-top: 0; color: #2c3e50;">Hasil Perhitungan</h3>
+            <div class="risk-value" id="riskPercentage">0%</div>
+            <div id="riskCategory" class="risk-category"></div>
+            <div style="margin-top: 15px; font-size: 14px; color: #555;" id="pointDetail"></div>
+        </div>
+
+        <div class="info-note">
+            ⚠️ Kalkulator ini berdasarkan Framingham Stroke Risk Profil. 
+            Konsultasikan hasil perhitungan dengan dokter.
+        </div>
+    </div>
+
+    <script>
+        function calculateRisk() {
+            // Ambil nilai dari form
+            const gender = document.querySelector('input[name="gender"]:checked').value;
+            const age = parseInt(document.getElementById('age').value);
+            const systolicPoints = parseInt(document.getElementById('systolic').value);
+            const diabetes = parseInt(document.querySelector('input[name="diabetes"]:checked').value);
+            const smoker = parseInt(document.querySelector('input[name="smoker"]:checked').value);
+            const heartDisease = parseInt(document.querySelector('input[name="heartDisease"]:checked').value);
+            const afib = parseInt(document.querySelector('input[name="afib"]:checked').value);
+            const lvh = parseInt(document.querySelector('input[name="lvh"]:checked').value);
+
+            // Validasi usia
+            if (age < 54 || age > 85) {
+                alert('Usia harus antara 54-85 tahun untuk perhitungan yang akurat.');
+                return;
+            }
+
+            // Hitung poin usia berdasarkan gender
+            let agePoints = 0;
+            if (gender === 'male') {
+                if (age >= 54 && age <= 56) agePoints = 0;
+                else if (age >= 57 && age <= 59) agePoints = 1;
+                else if (age >= 60 && age <= 62) agePoints = 2;
+                else if (age >= 63 && age <= 65) agePoints = 3;
+                else if (age >= 66 && age <= 68) agePoints = 4;
+                else if (age >= 69 && age <= 72) agePoints = 5;
+                else if (age >= 73 && age <= 75) agePoints = 6;
+                else if (age >= 76 && age <= 78) agePoints = 7;
+                else if (age >= 79 && age <= 81) agePoints = 8;
+                else if (age >= 82 && age <= 84) agePoints = 9;
+                else if (age >= 85) agePoints = 10;
+            } else {
+                // Poin untuk perempuan (berbeda)
+                if (age >= 54 && age <= 56) agePoints = 0;
+                else if (age >= 57 && age <= 59) agePoints = 1;
+                else if (age >= 60 && age <= 62) agePoints = 2;
+                else if (age >= 63 && age <= 65) agePoints = 3;
+                else if (age >= 66 && age <= 68) agePoints = 4;
+                else if (age >= 69 && age <= 72) agePoints = 5;
+                else if (age >= 73 && age <= 75) agePoints = 6;
+                else if (age >= 76 && age <= 78) agePoints = 7;
+                else if (age >= 79 && age <= 81) agePoints = 8;
+                else if (age >= 82 && age <= 84) agePoints = 9;
+                else if (age >= 85) agePoints = 10;
+            }
+
+            // Total poin
+            let totalPoints = agePoints + systolicPoints + (diabetes * 2) + (smoker * 3) + 
+                              (heartDisease * 2) + (afib * 4) + (lvh * 3);
+
+            // Konversi poin ke risiko 10 tahun (tabel konversi Framingham)
+            let riskPercent = 0;
+            
+            // Tabel konversi untuk pria (disederhanakan)
+            if (gender === 'male') {
+                if (totalPoints <= 1) riskPercent = 3;
+                else if (totalPoints <= 4) riskPercent = 4;
+                else if (totalPoints <= 6) riskPercent = 5;
+                else if (totalPoints <= 8) riskPercent = 6;
+                else if (totalPoints <= 10) riskPercent = 8;
+                else if (totalPoints <= 12) riskPercent = 10;
+                else if (totalPoints <= 14) riskPercent = 15;
+                else if (totalPoints <= 16) riskPercent = 20;
+                else if (totalPoints <= 18) riskPercent = 25;
+                else if (totalPoints <= 20) riskPercent = 30;
+                else if (totalPoints <= 22) riskPercent = 35;
+                else if (totalPoints <= 24) riskPercent = 40;
+                else riskPercent = 45;
+            } 
+            // Tabel konversi untuk wanita (disederhanakan)
+            else {
+                if (totalPoints <= 2) riskPercent = 2;
+                else if (totalPoints <= 4) riskPercent = 3;
+                else if (totalPoints <= 6) riskPercent = 4;
+                else if (totalPoints <= 8) riskPercent = 5;
+                else if (totalPoints <= 10) riskPercent = 6;
+                else if (totalPoints <= 12) riskPercent = 8;
+                else if (totalPoints <= 14) riskPercent = 11;
+                else if (totalPoints <= 16) riskPercent = 14;
+                else if (totalPoints <= 18) riskPercent = 17;
+                else if (totalPoints <= 20) riskPercent = 20;
+                else if (totalPoints <= 22) riskPercent = 24;
+                else if (totalPoints <= 24) riskPercent = 28;
+                else riskPercent = 32;
+            }
+
+            // Tentukan kategori risiko
+            let category = '';
+            let categoryClass = '';
+            if (riskPercent < 10) {
+                category = 'Risiko Rendah';
+                categoryClass = 'low-risk';
+            } else if (riskPercent < 20) {
+                category = 'Risiko Sedang';
+                categoryClass = 'moderate-risk';
+            } else {
+                category = 'Risiko Tinggi';
+                categoryClass = 'high-risk';
+            }
+
+            // Tampilkan hasil
+            document.getElementById('riskPercentage').textContent = riskPercent + '%';
+            const categoryElement = document.getElementById('riskCategory');
+            categoryElement.textContent = category;
+            categoryElement.className = 'risk-category ' + categoryClass;
+            
+            document.getElementById('pointDetail').innerHTML = 
+                `<strong>Total Poin:</strong> ${totalPoints}<br>
+                <small style="color: #7f8c8c;">Berdasarkan Framingham Stroke Risk Profile</small>`;
+            
+            document.getElementById('result').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
